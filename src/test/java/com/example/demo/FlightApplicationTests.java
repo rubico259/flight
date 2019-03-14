@@ -25,7 +25,7 @@ public class FlightApplicationTests {
         couponService = new CouponServiceImpl(new Data());
         Coupon coupon = couponService.getValidCoupon(1, 200.56);
 
-        Assert.assertEquals(false, coupon);
+        Assert.assertEquals(new Coupon(false), coupon);
     }
 
 }
