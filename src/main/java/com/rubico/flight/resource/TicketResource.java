@@ -21,7 +21,7 @@ public class TicketResource {
         this.ticketService = ticketService;
     }
 
-    @GetMapping("/ticket/isavailableticket")
+    @GetMapping("/ticket/isavailableticket/{ticketId}")
     public ResponseEntity<Boolean> isAvailable(@NotNull @PathVariable Integer ticketId) {
         Boolean available = ticketService.isAvailable(ticketId);
         return ResponseEntity.ok().body(available);

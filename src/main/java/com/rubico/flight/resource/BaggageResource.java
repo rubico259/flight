@@ -4,8 +4,8 @@ import com.rubico.flight.service.BaggageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
@@ -21,7 +21,7 @@ public class BaggageResource {
     }
 
     @GetMapping("/baggage/ischeckinsucceeded")
-    public ResponseEntity<Boolean> isSucceeded(@NotNull @PathVariable Integer destinationId, @NotNull @PathVariable String baggageId) {
+    public ResponseEntity<Boolean> isSucceeded(@NotNull @RequestParam Integer destinationId, @NotNull @RequestParam String baggageId) {
         Boolean succeeded = baggageService.isBaggageCheckInSucceeded(destinationId, baggageId);
         return ResponseEntity.ok().body(succeeded);
     }
