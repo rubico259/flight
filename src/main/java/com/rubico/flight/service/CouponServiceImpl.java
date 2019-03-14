@@ -1,6 +1,7 @@
 package com.rubico.flight.service;
 
 import com.rubico.flight.domain.Coupon;
+import com.rubico.flight.repository.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -9,9 +10,16 @@ import java.util.Random;
 
 @Service
 public class CouponServiceImpl implements CouponService {
+
+    private Data data;
+
+    public CouponServiceImpl(Data data) {
+        this.data = data;
+    }
+
     @Override
     public Boolean isCouponValid(Integer couponId) {
-        return null;
+        return data.getCoupons().contains(couponId);
     }
 
     @Override

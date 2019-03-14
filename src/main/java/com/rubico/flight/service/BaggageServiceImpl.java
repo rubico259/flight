@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 public class BaggageServiceImpl implements BaggageService {
 
 
-    private Cache cache;
-    private Data data = new Data();
+    private Data data;
 
+    public BaggageServiceImpl(Data data) {
+        this.data = data;
+    }
 
     @Override
     public Boolean isBaggageCheckInSucceeded(Integer destinationId, String baggageId) {

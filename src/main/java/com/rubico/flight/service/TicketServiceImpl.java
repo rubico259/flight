@@ -6,7 +6,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class TicketServiceImpl implements TicketService {
 
-    Data data = new Data();
+    private Data data;
+
+    public TicketServiceImpl(Data data) {
+        this.data = data;
+    }
 
     @Override
     public Boolean isAvailable(Integer id) {

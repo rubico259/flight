@@ -4,16 +4,21 @@ import com.rubico.flight.domain.Baggage;
 import com.rubico.flight.domain.Destination;
 import com.rubico.flight.domain.Ticket;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Data {
     private static Map<Integer, Ticket> tickets;
     private static Map<Integer, Destination> destinations;
     private static Map<Integer, Baggage> baggages;
+    private static List<Integer> coupons;
 
 
     static {
+        coupons = Arrays.asList(1, 2, 3, 4);
+
         tickets = new HashMap<>();
         tickets.put(1, new Ticket(1, true));
         tickets.put(2, new Ticket(2, false));
@@ -38,6 +43,10 @@ public class Data {
 
     public Baggage getBaggageById(String id) {
         return baggages.get(id);
+    }
+
+    public List<Integer> getCoupons() {
+        return coupons;
     }
 
 
