@@ -3,12 +3,14 @@ package com.rubico.flight.repository;
 import com.rubico.flight.domain.Baggage;
 import com.rubico.flight.domain.Destination;
 import com.rubico.flight.domain.Ticket;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class Data {
     private static Map<Integer, Ticket> tickets;
     private static Map<Integer, Destination> destinations;

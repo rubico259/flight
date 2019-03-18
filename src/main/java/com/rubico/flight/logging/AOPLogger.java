@@ -1,4 +1,4 @@
-package com.rubico.flight.looging;
+package com.rubico.flight.logging;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +22,5 @@ public class AOPLogger {
     public void logMethodAccessAfter(JoinPoint joinPoint) {
         log.info("***** Completed: " + joinPoint.getSignature().getName() + " *****");
     }
-
 }
 

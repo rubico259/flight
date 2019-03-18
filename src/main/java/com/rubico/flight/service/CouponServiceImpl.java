@@ -1,20 +1,24 @@
 package com.rubico.flight.service;
 
+import com.rubico.flight.cache.Cache;
 import com.rubico.flight.domain.Coupon;
 import com.rubico.flight.repository.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class CouponServiceImpl implements CouponService {
 
-    private Data data;
+    public static final String VALID_COUPON = "validCoupon";
+    private final Data data;
+    private Cache<Map.Entry<Integer, String>, Coupon> cache;
 
-    public CouponServiceImpl(Data data) {
+    @Autowired
+    public CouponServiceImpl(Data data, Cache<Map.Entry<Integer, String>, Coupon> cache) {
         this.data = data;
+        this.cache = cache;
     }
 
     @Override
@@ -24,10 +28,22 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     public Coupon getValidCoupon(Integer couponId, Double price) {
-        if (isCouponValid(couponId)) {
-            new Coupon(randomizeDiscount(price), true);
+        try {
+            if (isCouponValid(couponId)) {
+                Coupon coupon = cache.get(new AbstractMap.SimpleEntry<>(couponId, VALID_COUPON));
+                if (coupon != null) {
+                    return coupon;
+                } else {
+                    coupon = new Coupon(randomizeDiscount(price), true);
+                    cache.put(new AbstractMap.SimpleEntry<>(couponId, VALID_COUPON), coupon);
+                    return coupon;
+                }
+            }
+            return new Coupon(false);
+        } catch (Exception e) {
+
         }
-        return new Coupon(false);
+        return null;
     }
 
     private Double randomizeDiscount(Double price) {

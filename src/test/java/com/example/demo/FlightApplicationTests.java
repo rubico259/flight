@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.rubico.flight.cache.Cache;
 import com.rubico.flight.domain.Coupon;
 import com.rubico.flight.repository.Data;
 import com.rubico.flight.service.CouponService;
@@ -17,15 +18,18 @@ public class FlightApplicationTests {
 
     @Before
     public void init() {
-        couponService = new CouponServiceImpl(new Data());
+        couponService = new CouponServiceImpl(new Data(), new Cache<>(5));
     }
 
     @Test
     public void couponTest() {
-        couponService = new CouponServiceImpl(new Data());
         Coupon coupon = couponService.getValidCoupon(1, 200.56);
-
         Assert.assertEquals(new Coupon(false), coupon);
+    }
+
+    @Test
+    public void couponExceptionTest() throws Exception {
+        couponService.getValidCoupon(4, 200.56);
     }
 
 }

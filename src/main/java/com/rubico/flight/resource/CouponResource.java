@@ -23,7 +23,7 @@ public class CouponResource {
     }
 
     @GetMapping("/coupon/iscouponvalid")
-    public ResponseEntity<Coupon> isValid(@NotNull @RequestParam Integer couponId, @NotNull @RequestParam Double price) {
+    public ResponseEntity<Coupon> getValidCoupon(@NotNull @RequestParam Integer couponId, @NotNull @RequestParam Double price) {
         Coupon available = couponService.getValidCoupon(couponId, price);
         return ResponseEntity.ok().body(available);
     }
