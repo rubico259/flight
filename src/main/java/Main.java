@@ -9,6 +9,8 @@ import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.FileTreeIterator;
 import org.eclipse.jgit.treewalk.TreeWalk;
+import org.eclipse.jgit.treewalk.filter.PathSuffixFilter;
+import org.eclipse.jgit.treewalk.filter.TreeFilter;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,18 +29,18 @@ public class Main {
             tw.addTree(new DirCacheIterator(r.getRepository().readDirCache()));
             tw.addTree(new FileTreeIterator(r.getRepository()));
             tw.setRecursive(true);
-            int i = 0;
+            TreeFilter treeFilter = PathSuffixFilter.create(".yaml");
+            tw.setFilter(treeFilter);
             while (tw.next()) {
 
-                ObjectId obj = tw.getObjectId(i);
+
+                String path = tw.getPathString();
+                System.out.println(path);
+
+                ObjectId obj = tw.getObjectId(0);
                 ObjectLoader loader = r.getRepository().newObjectReader().open(obj);
                 String s = new String(loader.getBytes());
 
-                i++;
-//                System.out.printf(
-//                        "path: %s, Commit(mode/oid): %s/%s, Index(mode/oid): %s/%s, Workingtree(mode/oid): %s/%s\n",
-//                        tw.getPathString(), tw.getFileMode(0), tw.getObjectId(0), tw.getFileMode(1), tw.getObjectId(1),
-//                        tw.getFileMode(2), tw.getObjectId(2));
             }
         }
 

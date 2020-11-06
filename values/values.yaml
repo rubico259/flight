@@ -1,0 +1,4 @@
+git:
+  enabled: true
+  status: yse
+env: test
